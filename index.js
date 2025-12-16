@@ -95,7 +95,10 @@ function formSubmitted() {
   let platform    = document.querySelector("#platform");
   let actors      = document.querySelector("#actors");
   let mainCat     = document.querySelector("#mainCategory");
-  let subCat      = document.querySelector("#subCategory");
+//   let subCat      = document.querySelector("#subCategory");
+let subCat = Array.from(document.querySelectorAll("#genreBox input[type=checkbox]:checked"))
+  .map(cb => cb.value)
+  .join(", ");
   let releaseYear = document.querySelector("#releaseYear");
   let posterUrl   = document.querySelector("#posterUrl");
 //   let extraImages = document.querySelector("#extraImages");
@@ -106,7 +109,7 @@ function formSubmitted() {
     platform.value,
     actors.value,
     mainCat.value,
-    subCat.value,
+    subCat,          
     releaseYear.value,
     posterUrl.value,
     // extraImages.value,
@@ -127,8 +130,7 @@ mm.updateStats();
   platform.value    = "";
   actors.value      = "";
   mainCat.value     = "";
-  subCat.value      = "";
-  releaseYear.value = "";
+  document.querySelectorAll("#genreBox input[type=checkbox]").forEach(cb => cb.checked = false);  releaseYear.value = "";
   posterUrl.value   = "";
 //   extraImages.value = "";
   trailerUrl.value  = "";
@@ -142,6 +144,45 @@ mm.updateStats();
 
   return false;
 }
+
+function createEditableSelectCell(row, movie, propertyName, options) {
+    let cell = row.insertCell();
+    cell.classList.add("editable-cell");
+  
+    let label = document.createElement("span");
+    label.classList.add("cell-label");
+    label.textContent = movie[propertyName] || "";
+  
+    let select = document.createElement("select");
+    select.classList.add("cell-input", "hidden");
+  
+    options.forEach(opt => {
+      let option = document.createElement("option");
+      option.value = opt;
+      option.textContent = opt;
+      select.appendChild(option);
+    });
+  
+    select.value = movie[propertyName] || "";
+  
+    cell.appendChild(label);
+    cell.appendChild(select);
+  
+    label.onclick = () => {
+      label.classList.add("hidden");
+      select.classList.remove("hidden");
+      cell.classList.add("editing");
+      select.focus();
+    };
+  
+    select.onblur = () => {
+      movie[propertyName] = select.value;
+      label.textContent = select.value;
+      select.classList.add("hidden");
+      label.classList.remove("hidden");
+      cell.classList.remove("editing");
+    };
+  }
 
 function toggleForm() {
   let formCard = document.querySelector("#formCard");
@@ -777,11 +818,23 @@ class MovieManager {
       }
 
       createEditableCell(row, movie, "title");
-      createEditableCell(row, movie, "platform");
+      createEditableSelectCell(row, movie, "platform", [
+        "Netflix",
+        "Amazon Prime Video",
+        "Disney+",
+        "Canal+",
+        "Apple TV+",
+        "Other"
+      ]);
+      
       createEditableCell(row, movie, "actors");
       createEditableCell(row, movie, "mainCategory");
       createEditableCell(row, movie, "subCategory");
+
       createEditableCell(row, movie, "releaseYear");
+
+    
+    
 
       // Poster
       let posterCell = row.insertCell();
@@ -792,7 +845,11 @@ class MovieManager {
         img.className = "poster-img";
         posterCell.appendChild(img);
       } else {
-        posterCell.textContent = "No poster";
+        let img = document.createElement("img");
+        img.src = DEFAULT_POSTER;
+        img.alt = "Default Poster";
+        img.className = "poster-img";
+        posterCell.appendChild(img);
       }
 
        // Trailer (YouTube-style button instead of iframe as I faced probs with Iframes)

@@ -96,8 +96,16 @@
 
           <div class="form-row">
             <label for="platform">Available on *</label>
-            <input type="text" id="platform" required placeholder="Netflix, Prime, Canal+…">
-          </div>
+            <select id="platform" required>
+              <option value="">Choose platform…</option>
+              <option value="Netflix">Netflix</option>
+              <option value="Amazon Prime Video">Amazon Prime Video</option>
+              <option value="Disney+">Disney+</option>
+              <option value="Canal+">Canal+</option>
+              <option value="Apple TV+">Apple TV+</option>
+              <option value="Other">Other</option>
+            </select>
+                    </div>
 
           <div class="form-row">
             <label for="actors">Main actors</label>
@@ -114,8 +122,19 @@
           </div>
 
           <div class="form-row">
-            <label for="subCategory">Sub-category *</label>
-            <input type="text" id="subCategory" required placeholder="Comedy, Drama, Sci-Fi, Horror…">
+            <label>Genres *</label>
+          
+            <div class="genre-grid" id="genreBox">
+              <label><input type="checkbox" value="Action"> Action</label>
+              <label><input type="checkbox" value="Comedy"> Comedy</label>
+              <label><input type="checkbox" value="Drama"> Drama</label>
+              <label><input type="checkbox" value="Romance"> Romance</label>
+              <label><input type="checkbox" value="Science fiction"> Science fiction</label>
+              <label><input type="checkbox" value="Thriller"> Thriller</label>
+              <label><input type="checkbox" value="Horror"> Horror</label>
+              <label><input type="checkbox" value="Fantasy"> Fantasy</label>
+              <label><input type="checkbox" value="Documentary"> Documentary</label>
+            </div>
           </div>
 
           <div class="form-row">
