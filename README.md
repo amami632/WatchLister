@@ -1,5 +1,7 @@
 # WatchLister
 
+![Watchlister screenshot](images/Screenshot.png)
+
 ## Project description
 
 This project is a web application developed in HTML, CSS and JavaScript.  
