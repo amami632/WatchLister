@@ -8,6 +8,7 @@ This project is a web application developed in HTML, CSS and JavaScript.
 Its purpose is to manage a personal list of movies and TV series that I want to watch later.
 
 The application is inspired by the contact manager example studied in **Module 5**, but adapted to a different context and extended with additional features.
+
 ---
 
 ## Main features
